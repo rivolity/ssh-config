@@ -6,12 +6,14 @@ private keys should be deposited in
     ~/.ssh/
 
 Private keys should have permission `rw-------`
-if your private keys contain a pattern `private`.
+
+if your private keys contain a pattern `private`, you can execute this command to set permission.
 
     chmod 600 *private*.pem
 
 Public Keys should have permission `rw-r--r--`
-if your public keys contain a pattern `pub`.
+
+if your public keys contain a pattern `pub`, you can execute this command to set permission.
 
 
     chmod 644 *pub*.pem
@@ -51,7 +53,7 @@ You can add a proxy to your Config file, by using the following configuration.
 	  HostName proxy_host.dev.company.com
 	  User proxy-user
 
- - By following this new config, `user3` will connect to the `vm-dev-test-3` using the `private3.pem` and the proxy  `proxy-dev` with the user `proxy-suer`
+ - By following this new config, `user3` will connect to the `vm-dev-test-3` using the `private3.pem` and the proxy `proxy-dev` with the user `proxy-user`
 
 ### Connection test
 	ssh vm-dev-test-1
