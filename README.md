@@ -1,3 +1,4 @@
+
 # SSH Config
 Connect to Hosts using ssh and Tab suggestion Completion, the configuration is for connection to Hosts (using private Keys) and for connection using private key and proxy setup.
 ### Requirements:
@@ -17,6 +18,9 @@ if your public keys contain a pattern `pub`, you can execute this command to set
 
 
     chmod 644 *pub*.pem
+--
+> you can use this website to understand permission
+> https://chmod-calculator.com/
 
 ### Configuration connect with no proxy
 Change directory to home/.ssh
