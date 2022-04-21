@@ -64,3 +64,7 @@ You can add a proxy to your Config file, by using the following configuration.
 for the host that requires a proxy
 
 	ssh vm-dev-test-3
+
+To prevent ssh from asking the passphrase everytime, you can just add your private key to the list maintained by ssh-agent
+
+	ssh-add ~/.ssh/your_private_key
