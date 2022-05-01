@@ -1,37 +1,70 @@
-## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/rivolity/ssh-config/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# SSH Config
+Connect to Hosts using ssh and Tab suggestion Completion, the configuration is for connection to Hosts (using private Keys) and for connection using private key and proxy setup.
+### Requirements:
+private keys should be deposited in
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+    ~/.ssh/
 
-### Markdown
+Private keys should have permission `rw-------`
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+if your private keys contain a pattern `private`, you can execute this command to set permission.
 
-```markdown
-Syntax highlighted code block
+    chmod 600 *private*.pem
 
-# Header 1
-## Header 2
-### Header 3
+Public Keys should have permission `rw-r--r--`
 
-- Bulleted
-- List
+if your public keys contain a pattern `pub`, you can execute this command to set permission.
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+    chmod 644 *pub*.pem
+--
+> you can use this website to understand permission
+> https://chmod-calculator.com/
 
-[Link](url) and ![Image](src)
-```
+### Configuration connect with no proxy
+Change directory to home/.ssh
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+    cd ~/.ssh/
+Create a new file named `config` with no extension in this repository.
+ - The config should look like that
 
-### Jekyll Themes
+		Host vm-dev-test-1
+		    HostName 199.99.33.22
+		    StrictHostKeyChecking no
+		    User user1
+		    IdentityFile ~/.ssh/private1.pem
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/rivolity/ssh-config/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+		Host vm-dev-test-2
+		    HostName 200.99.33.33
+		    StrictHostKeyChecking no
+		    User user2
+		    IdentityFile ~/.ssh/private2.pem
 
-### Support or Contact
+ - By following the config file, `user1` will connect to the `vm-dev-test-1` using the `private1.pem` and the `user2` will connect to the `vm-dev-test-2` using `private2.pem`
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Connect  configuration with proxy
+You can add a proxy to your Config file, by using the following configuration.
+
+	Host vm-dev-test-3
+	    HostName 191.13.31.72
+	    StrictHostKeyChecking no
+	    User user3
+	    IdentityFile ~/.ssh/private3.pem
+	    ProxyCommand ssh -W %h:%p proxy-dev
+
+	Host proxy-dev
+	  HostName proxy_host.dev.company.com
+	  User proxy-user
+
+ - By following this new config, `user3` will connect to the `vm-dev-test-3` using the `private3.pem` and the proxy `proxy-dev` with the user `proxy-user`
+
+### Connection test
+	ssh vm-dev-test-1
+for the host that requires a proxy
+
+	ssh vm-dev-test-3
+
+To prevent ssh from asking the passphrase everytime, you can just add your private key to the list maintained by ssh-agent
+
+	ssh-add ~/.ssh/your_private_key
