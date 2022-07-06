@@ -66,5 +66,12 @@ for the host that requires a proxy
 	ssh vm-dev-test-3
 
 To prevent ssh from asking the passphrase everytime, you can just add your private key to the list maintained by ssh-agent
+start the ssh-add agent
+
+	eval `ssh-agent -s`
+	ssh-add
+
+add your key to the agent
 
 	ssh-add ~/.ssh/your_private_key
+	
